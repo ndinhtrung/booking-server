@@ -2,6 +2,18 @@
 
 A minimal setup for testing SQL files on PostgreSQL locally using Docker Compose.
 
+## Project Structure
+
+```text
+project/
+├── compose.yaml
+├── README.md
+└── sql/
+    ├── schema.sql
+    ├── seed.sql
+    └── queries.sql
+```
+
 ## Setup
 
 **1. Start the database**
@@ -23,6 +35,17 @@ docker compose exec db psql -U postgres -d bookingserver
 ```bash
 docker compose down -v
 ```
+`-v` removes the PostgreSQL volume so the database is recreated from `schema.sql` and `seed.sql` next time.
+
+## Running Test Queries
+
+Run all queries inside `sql/queries.sql`:
+
+```bash
+docker compose exec -T db psql -U postgres -d bookingserver < sql/queries.sql
+```
+
+`-T` disables TTY mode so input redirection works correctly.
 
 ## psql Command Reference
 
