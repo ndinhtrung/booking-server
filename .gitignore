@@ -1,0 +1,15 @@
+# PostgreSQL Docker volume data
+postgres_data/
+
+# Environment variables
+.env
+
+# macOS
+.DS_Store
+
+# VS Code
+.vscode/
+
+# Python cache (if any Python files remain)
+__pycache__/
+*.pyc
