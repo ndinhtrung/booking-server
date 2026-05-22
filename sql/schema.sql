@@ -1,14 +1,49 @@
-CREATE TABLE decks (
+CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   name TEXT NOT NULL UNIQUE,
-  description TEXT,
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  email TEXT NOT NULL UNIQUE
 );
 
-CREATE TABLE cards (
+CREATE TABLE buildings (
   id SERIAL PRIMARY KEY,
-  deck_id INTEGER NOT NULL REFERENCES decks(id),
-  question TEXT NOT NULL,
-  answer TEXT NOT NULL,
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  name TEXT NOT NULL UNIQUE
+);
+
+CREATE TABLE rooms (
+  id SERIAL PRIMARY KEY,
+  building_id INTEGER NOT NULL REFERENCES buildings(id),
+  name TEXT NOT NULL UNIQUE,
+  capacity INTEGER NOT NULL,
+  type TEXT NOT NULL CHECK (type IN ('meeting room', 'lecture room', 'studio', 'workshop room')),
+  approval TEXT NOT NULL CHECK (approval IN ('yes', 'no'))
+);
+
+CREATE TABLE bookings (
+  id SERIAL PRIMARY KEY,
+  room_id INTEGER NOT NULL REFERENCES rooms(id),
+  user_id INTEGER NOT NULL REFERENCES users(id),
+);
+
+CREATE TABLE occurrences (
+  id SERIAL PRIMARY KEY,
+  booking_id INTEGER NOT NULL REFERENCES bookings(id),
+  start_time TIMESTAMP NOT NULL,
+  end_time TIMESTAMP NOT NULL CHECK (end_time > start_time), 
+  --no limit for duration?
+  status TEXT NOT NULL CHECK (status IN ('pending', 'confirmed', 'cancelled', 'rejected')),
+  cancel_time TIMESTAMP CHECK ((status = 'cancelled') OR cancel_time IS NULL) DEFAULT CURRENT_TIMESTAMP,
+  --not optional if status = cancelled
+  cancel_reason TEXT CHECK ((status = 'cancelled') OR cancel_reason IS NULL),
+  --optional even when status = cancelled
+);
+
+CREATE TABLE equipments (
+  id SERIAL PRIMARY KEY,
+  name TEXT NOT NULL UNIQUE
+);
+
+CREATE TABLE equipment_instances (
+  id SERIAL PRIMARY KEY,
+  equipment_id INTEGER NOT NULL REFERENCES equipments(id),
+  room_id INTEGER NOT NULL REFERENCES rooms(id)
 );
