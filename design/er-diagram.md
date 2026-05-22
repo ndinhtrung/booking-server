@@ -50,7 +50,7 @@ erDiagram
         int        room_id          FK
     }
 
-    BUILDING  ||--o{ ROOM                : "is inside"
+    BUILDING  ||--o{ ROOM                : "hosts"
     ROOM      ||--o{ BOOKING             : "allows"
     USER      ||--o{ BOOKING             : "reserves"
     BOOKING   ||--o{ OCCURENCE           : "has"
