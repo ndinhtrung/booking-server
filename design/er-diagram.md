@@ -1,58 +1,59 @@
-# ER Diagram: Flashcard Study Tracker
-
-The diagram below shows both the entities that exist in the current schema and two entities that a real version would require. Elements that diverge from the current schema are annotated with **[proposed]**.
+# ER Diagram: Room Booking Service
 
 ```mermaid
 erDiagram
 
+    BUILDING {
+        int        id               PK
+        text       name
+    }
+
+    ROOM {
+        int        id               PK
+        int        building_id      FK
+        text       name
+        int        capacity
+        text       type
+    }
+
     USER {
-        int     id          PK
-        text    email
-        text    password_hash
-        timestamp created_at
+        int        id               PK
+        text       name
+        text       email
     }
 
-    DECK {
-        int     id          PK
-        int     user_id     FK
-        text    name
-        text    description
-        timestamp created_at
+    BOOKING {
+        int        id               PK
+        int        room_id          FK
+        int        user_id          FK
     }
 
-    CARD {
-        int     id          PK
-        int     deck_id     FK
-        text    question
-        text    answer
-        timestamp created_at
+    OCCURENCE {
+        int        id               PK
+        int        booking_id       FK
+        text       name
+        timestamp  start_time
+        timestamp  end_time
+        text       status
+        timestamp  cancel_time
+        text       cancel_reason
     }
 
-    TAG {
-        int     id          PK
-        int     user_id     FK
-        text    name
-        timestamp created_at
+    EQUIPMENT {
+        int        id               PK
+        text       name
     }
 
-    CARD_TAG {
-        int     card_id     FK
-        int     tag_id      FK
+    EQUIPMENT_INSTANCE {
+        int        id               PK
+        int        equipment_id     FK
+        int        room_id          FK
     }
 
-    STUDY_EVENT {
-        int     id          PK
-        int     card_id     FK
-        int     user_id     FK
-        int     rating
-        timestamp reviewed_at
-    }
-
-    USER ||--o{ DECK         : "owns"
-    DECK ||--o{ CARD         : "contains"
-    USER ||--o{ TAG          : "owns [proposed]"
-    CARD ||--o{ CARD_TAG     : "labelled by"
-    TAG  ||--o{ CARD_TAG     : "labels"
-    CARD ||--o{ STUDY_EVENT  : "reviewed in [proposed]"
-    USER ||--o{ STUDY_EVENT  : "performed by [proposed]"
+    BUILDING  ||--o{ ROOM                : "be inside"
+    ROOM      ||--o{ BOOKING             : "allow"
+    USER      ||--o{ BOOKING             : "reserve"
+    BOOKING   ||--o{ OCCURENCE           : "have"
+    ROOM      ||--o{ EQUIPMENT_INSTANCE  : "contain"
+    EQUIPMENT ||--o{ EQUIPMENT_INSTANCE  : "include"
 ```
