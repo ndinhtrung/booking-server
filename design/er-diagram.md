@@ -50,10 +50,10 @@ erDiagram
         int        room_id          FK
     }
 
-    BUILDING  ||--o{ ROOM                : "be inside"
-    ROOM      ||--o{ BOOKING             : "allow"
-    USER      ||--o{ BOOKING             : "reserve"
-    BOOKING   ||--o{ OCCURENCE           : "have"
-    ROOM      ||--o{ EQUIPMENT_INSTANCE  : "contain"
-    EQUIPMENT ||--o{ EQUIPMENT_INSTANCE  : "include"
+    BUILDING  ||--o{ ROOM                : "is inside"
+    ROOM      ||--o{ BOOKING             : "allows"
+    USER      ||--o{ BOOKING             : "reserves"
+    BOOKING   ||--o{ OCCURENCE           : "has"
+    ROOM      ||--o{ EQUIPMENT_INSTANCE  : "contains"
+    EQUIPMENT ||--o{ EQUIPMENT_INSTANCE  : "includes"
 ```
