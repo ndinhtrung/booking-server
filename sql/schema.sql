@@ -29,12 +29,14 @@ CREATE TABLE occurrences (
   booking_id INTEGER NOT NULL REFERENCES bookings(id),
   start_time TIMESTAMP NOT NULL,
   end_time TIMESTAMP NOT NULL CHECK (end_time > start_time), 
-  --no limit for duration?
   status TEXT NOT NULL CHECK (status IN ('pending', 'confirmed', 'cancelled', 'rejected')),
-  cancel_time TIMESTAMP CHECK ((status = 'cancelled') OR cancel_time IS NULL) DEFAULT CURRENT_TIMESTAMP,
-  --not optional if status = cancelled
-  cancel_reason TEXT CHECK ((status = 'cancelled') OR cancel_reason IS NULL),
-  --optional even when status = cancelled
+  cancel_time TIMESTAMP CASE status (
+    WHEN 'cancelled' THEN DEFAULT CURRENT_TIMESTAMP
+    ELSE cancel_time IS NULL
+  ),
+  cancel_reason TEXT CHECK (
+    WHEN status <> 'cancelled' THEN cancel_reason IS NULL
+  )
 );
 
 CREATE TABLE equipments (

@@ -1,11 +1,20 @@
-INSERT INTO decks (name, description)
-VALUES
-  ('SQL Basics', 'Starter deck for SQL concepts.'),
-  ('Web Development', 'Starter deck for backend web ideas.');
+INSERT INTO users (name, email)
+VALUES 
+  ('A', 'a@gmail.com')
 
-INSERT INTO cards (deck_id, question, answer)
+INSERT INTO buildings (name)
 VALUES
-  (1, 'What does SQL stand for?', 'Structured Query Language'),
-  (1, 'What is a primary key?', 'A unique identifier for a record in a database table.'),
-  (2, 'What is Flask?', 'A micro web framework for Python.'),
-  (2, 'What is a route in Flask?', 'A URL pattern that is associated with a view function that handles requests to that URL.');
+  ('biz')
+
+INSERT INTO rooms (building_id, capacity, type, approval,)
+VALUES 
+  (1, 5, 'studio', 'yes')
+
+INSERT INTO bookings (room_id, user_id)
+VALUES 
+  (1, 1)
+
+INSERT INTO occurrences (booking_id, start_time, end_time, status)
+VALUES
+  (1, '2028-01-19 03:14:07', '2038-01-19 03:14:07', 'cancelled'),
+
