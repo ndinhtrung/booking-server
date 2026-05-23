@@ -11,7 +11,7 @@ CREATE TABLE buildings (
 
 CREATE TABLE rooms (
   id SERIAL PRIMARY KEY,
-  building_id INTEGER NOT NULL REFERENCES buildings(id),
+  building_id INTEGER NOT NULL REFERENCES buildings(id) ON DELETE CASCADE,
   name TEXT NOT NULL UNIQUE,
   capacity INTEGER NOT NULL,
   type TEXT NOT NULL CHECK (type IN ('meeting room', 'lecture room', 'studio', 'workshop room')),
@@ -20,14 +20,14 @@ CREATE TABLE rooms (
 
 CREATE TABLE bookings (
   id SERIAL PRIMARY KEY,
-  room_id INTEGER NOT NULL REFERENCES rooms(id),
-  user_id INTEGER NOT NULL REFERENCES users(id),
+  room_id INTEGER NOT NULL REFERENCES rooms(id) ON DELETE RESTRICT,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   approval_granted BOOLEAN
 );
 
 CREATE TABLE occurrences (
   id SERIAL PRIMARY KEY,
-  booking_id INTEGER NOT NULL REFERENCES bookings(id),
+  booking_id INTEGER NOT NULL REFERENCES bookings(id) ON DELETE CASCADE,
   start_time TIMESTAMP NOT NULL,
   end_time TIMESTAMP NOT NULL CHECK (end_time > start_time), 
   status TEXT NOT NULL CHECK (status IN ('pending', 'confirmed', 'cancelled', 'rejected')),
@@ -50,6 +50,6 @@ CREATE TABLE equipments (
 
 CREATE TABLE equipment_instances (
   id SERIAL PRIMARY KEY,
-  equipment_id INTEGER NOT NULL REFERENCES equipments(id),
-  room_id INTEGER NOT NULL REFERENCES rooms(id)
+  equipment_id INTEGER NOT NULL REFERENCES equipments(id) ON DELETE RESTRICT,
+  room_id INTEGER REFERENCES rooms(id) ON DELETE RESTRICT
 );
