@@ -7,11 +7,14 @@ A minimal setup for testing SQL files on PostgreSQL locally using Docker Compose
 ```text
 project/
 ├── compose.yaml
-├── README.md
-└── sql/
+├── design
+│   └── er-diagram.md
+├── report
+│   └── group-project-checklist.md
+└── sql
+    ├── queries.sql
     ├── schema.sql
-    ├── seed.sql
-    └── queries.sql
+    └── seed.sql
 ```
 
 ## Setup
