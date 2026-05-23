@@ -15,13 +15,14 @@ CREATE TABLE rooms (
   name TEXT NOT NULL UNIQUE,
   capacity INTEGER NOT NULL,
   type TEXT NOT NULL CHECK (type IN ('meeting room', 'lecture room', 'studio', 'workshop room')),
-  approval TEXT NOT NULL CHECK (approval IN ('yes', 'no'))
+  require_approval BOOLEAN NOT NULL
 );
 
 CREATE TABLE bookings (
   id SERIAL PRIMARY KEY,
   room_id INTEGER NOT NULL REFERENCES rooms(id),
   user_id INTEGER NOT NULL REFERENCES users(id),
+  approval_granted BOOLEAN
 );
 
 CREATE TABLE occurrences (
@@ -30,12 +31,15 @@ CREATE TABLE occurrences (
   start_time TIMESTAMP NOT NULL,
   end_time TIMESTAMP NOT NULL CHECK (end_time > start_time), 
   status TEXT NOT NULL CHECK (status IN ('pending', 'confirmed', 'cancelled', 'rejected')),
-  cancel_time TIMESTAMP CASE status (
-    WHEN 'cancelled' THEN DEFAULT CURRENT_TIMESTAMP
-    ELSE cancel_time IS NULL
+  cancel_time TIMESTAMP CHECK (
+    ((status = 'cancelled') AND (cancel_time IS NOT NULL)) --how to insert current timestamp
+    OR 
+    ((status <> 'cancelled') AND (cancel_time IS NULL))
   ),
   cancel_reason TEXT CHECK (
-    WHEN status <> 'cancelled' THEN cancel_reason IS NULL
+    ((status <> 'cancelled') AND (cancel_reason IS NULL))
+    OR 
+    (status = 'cancelled')
   )
 );
 
