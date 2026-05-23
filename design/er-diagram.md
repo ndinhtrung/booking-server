@@ -52,10 +52,10 @@ erDiagram
         int        room_id          FK
     }
 
-    BUILDINGS  ||--o{ ROOMS                : "hosts"
-    ROOMS      ||--o{ BOOKINGS             : "allows"
-    USERS      ||--o{ BOOKINGS             : "reserves"
-    BOOKINGS   ||--o{ OCCURENCES           : "has"
-    ROOMS      ||--o{ EQUIPMENT_INSTANCES  : "contains"
-    EQUIPMENTS ||--o{ EQUIPMENT_INSTANCES  : "includes"
+    BUILDINGS  ||--o{ ROOMS                : "host"
+    ROOMS      ||--o{ BOOKINGS             : "allow"
+    USERS      ||--o{ BOOKINGS             : "reserve"
+    BOOKINGS   ||--o{ OCCURENCES           : "have"
+    ROOMS      ||--o{ EQUIPMENT_INSTANCES  : "contain"
+    EQUIPMENTS ||--o{ EQUIPMENT_INSTANCES  : "include"
 ```
