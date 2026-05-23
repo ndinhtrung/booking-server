@@ -14,6 +14,7 @@ erDiagram
         text       name
         int        capacity
         text       type
+        boolean    require_approval
     }
 
     USERS {
@@ -26,6 +27,7 @@ erDiagram
         int        id               PK
         int        room_id          FK
         int        user_id          FK
+        boolean    approval_granted
     }
 
     OCCURENCES {
