@@ -3,12 +3,12 @@
 ```mermaid
 erDiagram
 
-    BUILDING {
+    BUILDINGS {
         int        id               PK
         text       name
     }
 
-    ROOM {
+    ROOMS {
         int        id               PK
         int        building_id      FK
         text       name
@@ -16,19 +16,19 @@ erDiagram
         text       type
     }
 
-    USER {
+    USERS {
         int        id               PK
         text       name
         text       email
     }
 
-    BOOKING {
+    BOOKINGS {
         int        id               PK
         int        room_id          FK
         int        user_id          FK
     }
 
-    OCCURENCE {
+    OCCURENCES {
         int        id               PK
         int        booking_id       FK
         text       name
@@ -39,21 +39,21 @@ erDiagram
         text       cancel_reason
     }
 
-    EQUIPMENT {
+    EQUIPMENTS {
         int        id               PK
         text       name
     }
 
-    EQUIPMENT_INSTANCE {
+    EQUIPMENT_INSTANCES {
         int        id               PK
         int        equipment_id     FK
         int        room_id          FK
     }
 
-    BUILDING  ||--o{ ROOM                : "hosts"
-    ROOM      ||--o{ BOOKING             : "allows"
-    USER      ||--o{ BOOKING             : "reserves"
-    BOOKING   ||--o{ OCCURENCE           : "has"
-    ROOM      ||--o{ EQUIPMENT_INSTANCE  : "contains"
-    EQUIPMENT ||--o{ EQUIPMENT_INSTANCE  : "includes"
+    BUILDINGS  ||--o{ ROOMS                : "hosts"
+    ROOMS      ||--o{ BOOKINGS             : "allows"
+    USERS      ||--o{ BOOKINGS             : "reserves"
+    BOOKINGS   ||--o{ OCCURENCES           : "has"
+    ROOMS      ||--o{ EQUIPMENT_INSTANCES  : "contains"
+    EQUIPMENTS ||--o{ EQUIPMENT_INSTANCES  : "includes"
 ```
