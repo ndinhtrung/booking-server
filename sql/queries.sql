@@ -17,10 +17,14 @@ INNER JOIN buildings AS bu ON bu.id = r.building_id
 WHERE e.name = 'Projector' AND bu.name = 'School of Science and Technology';
 
 -- Which organization cancels bookings the most this year?  
---to answer this, we have to assume that a booking can only be cancelled
---by the organization, not the school. 
---another challenge is how we count the number of cancellations, because
---cancellations of recurring bookings should be counted as one.
+SELECT u.name, COUNT(DISTINCT bo.id) AS cancellations_count
+FROM occurrences AS o
+LEFT JOIN bookings AS bo ON bo.id = o.booking_id
+LEFT JOIN users AS u ON u.id = bo.user_id
+WHERE o.status = 'cancelled'
+GROUP BY u.name
+ORDER BY cancellations_count DESC
+LIMIT 1;
 
 
 -- On average, how long do people cancel their bookings before the bookings start?  
