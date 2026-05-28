@@ -20,7 +20,7 @@ Tick each box before submitting. The boxes under **Required** must all be ticked
 - [x] The conceptual diagram is readable and uses crow's foot notation.
 - [x] The relational schema in the PDF matches `schema.sql`.
 - [x] `schema.sql` runs without errors on PostgreSQL.
-- [ ] `seed.sql` loads successfully into the schema and contains realistic example data.
+- [x] `seed.sql` loads successfully into the schema and contains realistic example data.
 - [ ] `queries.sql` runs against the populated schema, each query is preceded by a comment naming the application query it answers, and the queries cover the application queries listed in the subject analysis.
 - [ ] The design-quality review includes at least one anomaly or redundancy risk and at least two functional dependencies in `X → Y` form with short explanations.
 - [ ] The privacy/data-minimization paragraph is included.
