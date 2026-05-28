@@ -1,24 +1,27 @@
--- What are all occurrences of a single booking?  
+-- What are all occurrences of a single booking?
+-- Tested with booking with id = 3  
 
 SELECT * 
 FROM occurrences AS o
-INNER JOIN bookings AS b on b.id = o.booking_id
-WHERE b.id = 1;
+INNER JOIN bookings AS bo on bo.id = o.booking_id
+WHERE bo.id = 3;
 
--- What is the number of projectors in a certain building?  
+-- What is the number of projectors in a certain building? 
+-- Tested with building School of Science and Technology
 
-SELECT COUNT(*)
+SELECT COUNT(*) as projector_count
 FROM equipment_instances AS ei
 INNER JOIN equipments AS e ON e.id = ei.equipment_id
 INNER JOIN rooms AS r ON r.id = ei.room_id
-INNER JOIN buildings AS b ON b.id = r.building_id
-WHERE e.name = 'Projector' AND b.name = 'Vare';
+INNER JOIN buildings AS bu ON bu.id = r.building_id
+WHERE e.name = 'Projector' AND bu.name = 'School of Science and Technology';
 
 -- Which organization cancels bookings the most this year?  
 --to answer this, we have to assume that a booking can only be cancelled
 --by the organization, not the school. 
 --another challenge is how we count the number of cancellations, because
 --cancellations of recurring bookings should be counted as one.
+
 
 -- On average, how long do people cancel their bookings before the bookings start?  
 SELECT AVG(start_time - cancel_time) AS average_cancel_period
@@ -31,15 +34,17 @@ FROM occurrences
 WHERE status = 'confirmed';
 
 -- How many times have each organization booked each room?
-SELECT u.name, r.name, COALESCE(COUNT(bo.id), 0) AS booking_count
+SELECT 
+    u.name AS org_name, 
+    r.name AS room_name,
+    COALESCE(COUNT(DISTINCT bo.id), 0) AS booking_count
 FROM users AS u
 LEFT JOIN bookings AS bo on bo.user_id = u.id
-LEFT JOIN occurrences AS o on o.booking_id = bo.id AND o.status = 'confirmed'
-LEFT JOIN rooms AS r on r.id = o.room_id
+LEFT JOIN rooms AS r on r.id = bo.room_id
 GROUP BY u.name, r.name
 ORDER BY u.name;
 
--- Which types of equipment have the most instances?
+-- Which 5 types of equipment have the most instances?
 SELECT e.name, COUNT(ei.id) AS instance_count
 FROM equipments AS e
 LEFT JOIN equipment_instances AS ei ON ei.equipment_id = e.id

@@ -30,22 +30,26 @@ VALUES
   (3, 5, NULL), 
   (2, 6, TRUE), 
   (1, 7, FALSE), 
-  (2, 8, NULL);
+  (2, 8, NULL),
+  (1, 8, NULL),
+  (3, 8, NULL);
 
 INSERT INTO occurrences (booking_id, start_time, end_time, status, cancel_time, cancel_reason)
 VALUES
-  (1, '2028-01-19 03:14:07', '2038-01-19 03:14:07', 'cancelled', CURRENT_TIMESTAMP, 'Not enough participants'),
+  (1, '2026-05-29 07:15:00', '2026-05-29 09:15:00', 'cancelled', CURRENT_TIMESTAMP, 'Not enough participants'),
   (2, '2028-01-20 10:00:00', '2028-01-20 12:00:00', 'confirmed', NULL, NULL),
   (3, '2028-01-21 14:00:00', '2028-01-21 16:00:00', 'pending', NULL, NULL),
   (3, '2028-02-04 14:00:00', '2028-02-04 16:00:00', 'pending', NULL, NULL),
   (3, '2028-02-11 14:00:00', '2028-02-11 16:00:00', 'pending', NULL, NULL),
-  (4, '2028-01-22 09:00:00', '2028-01-22 11:00:00', 'confirmed', NULL, NULL),
+  (4, '2028-01-22 09:00:00', '2028-01-22 11:00:00', 'rejected', NULL, NULL),
   (4, '2028-01-29 09:00:00', '2028-01-29 11:00:00', 'rejected', NULL, NULL),
   (4, '2028-02-05 09:00:00', '2028-02-05 11:00:00', 'rejected', NULL, NULL),
   (5, '2028-01-23 13:00:00', '2028-01-23 15:00:00', 'confirmed', NULL, NULL),
   (6, '2028-01-24 08:00:00', '2028-01-24 10:00:00', 'pending', NULL, NULL),
-  (7, '2028-01-25 17:00:00', '2028-01-25 19:00:00', 'cancelled', CURRENT_TIMESTAMP, 'Event cancelled by organizer'),
-  (8, '2028-01-26 11:00:00', '2028-01-26 13:00:00', 'confirmed', NULL, NULL);
+  (7, '2026-05-28 20:00:00', '2026-05-28 22:00:00', 'cancelled', CURRENT_TIMESTAMP, NULL),
+  (8, '2028-01-26 11:00:00', '2028-01-26 13:00:00', 'confirmed', NULL, NULL),
+  (9, '2028-01-26 11:00:00', '2028-01-26 13:00:00', 'pending', NULL, NULL),
+  (10, '2028-01-26 06:00:00', '2028-01-26 08:00:00', 'pending', NULL, NULL);
 
 INSERT INTO equipments (name)
 VALUES
